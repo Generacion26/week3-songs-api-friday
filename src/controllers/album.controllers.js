@@ -1,8 +1,20 @@
 const catchError = require('../utils/catchError');
 const Album = require('../models/Album');
+const Artist = require('../models/Artist');
 
 const getAll = catchError(async (req, res) => {
-    const results = await Album.findAll();
+    const results = await Album.findAll({
+
+        include: [
+            {
+                model: Artist,
+                attributes: ["name", "country", "formationYear"]
+            }
+        ]
+
+        //include: [Artist]
+
+    });
     return res.json(results);
 });
 
